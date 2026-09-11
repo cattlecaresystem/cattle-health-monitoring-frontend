@@ -620,10 +620,10 @@ TRANSLATIONS = {
         "ta": "இடைநிறுத்தப்பட்டது",
         "hi": "रुका हुआ",
     },
-    "refresh_interval": {
-        "en": "Refresh",
-        "ta": "புதுப்பிப்பு",
-        "hi": "रिफ्रेश",
+    "auto_refresh": {
+        "en": "auto-refresh",
+        "ta": "தானியங்கு புதுப்பிப்பு",
+        "hi": "ऑटो-रिफ्रेश",
     },
     "last_synced": {
         "en": "Last synced",

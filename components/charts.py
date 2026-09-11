@@ -130,17 +130,18 @@ def build_live_trend_chart(readings: list, height: int = 320) -> go.Figure:
         rows=2, cols=1,
         shared_xaxes=True,
         vertical_spacing=0.14,
-        subplot_titles=("🌡️ Temperature (°C)", "❤️ Heart Rate (BPM)"),
+        subplot_titles=("TEMPERATURE  (°C)", "HEART RATE  (BPM)"),
     )
 
-    for row, (series, color, hi, lo) in enumerate(
-        [("temperature", SERIES["temperature"], 39.5, 35.0),
-         ("bpm", SERIES["bpm"], 100, 30)], start=1
+    for row, (series, color, hi, lo, fill) in enumerate(
+        [("temperature", SERIES["temperature"], 39.5, 35.0, "rgba(229,83,75,0.10)"),
+         ("bpm", SERIES["bpm"], 100, 30, "rgba(45,164,78,0.10)")], start=1
     ):
         fig.add_trace(go.Scatter(
             x=data["timestamps"], y=data[series],
             mode="lines", name=series,
-            line=dict(color=color, width=2, shape="spline", smoothing=0.4),
+            line=dict(color=color, width=2.2, shape="spline", smoothing=0.4),
+            fill="tozeroy", fillcolor=fill,
         ), row=row, col=1)
 
         # Highlight the newest reading so the live edge of the series is obvious
@@ -157,13 +158,20 @@ def build_live_trend_chart(readings: list, height: int = 320) -> go.Figure:
         fig.add_hline(y=lo, line_dash="dot", line_color=SERIES["activity"],
                       opacity=0.4, row=row, col=1)
 
+        # The fill runs to zero, so pin the axis to the data band or it collapses flat
+        values = [v for v in data[series] if v > 0]
+        if values:
+            span = max(values) - min(values)
+            pad = span * 0.25 if span else max(abs(min(values)) * 0.02, 0.5)
+            fig.update_yaxes(range=[min(values) - pad, max(values) + pad], row=row, col=1)
+
     base = _layout(p)
     fig.update_layout(
         height=height,
         showlegend=False,
         **{k: v for k, v in base.items() if k not in ("xaxis", "yaxis")},
     )
-    fig.update_annotations(font=dict(size=12, color=p["chart_text"]))
+    fig.update_annotations(font=dict(size=11, color=p["chart_text"]))
     for i in (1, 2):
         fig.update_xaxes(gridcolor=p["chart_grid"], showgrid=True, row=i, col=1)
         fig.update_yaxes(gridcolor=p["chart_grid"], showgrid=True, row=i, col=1)

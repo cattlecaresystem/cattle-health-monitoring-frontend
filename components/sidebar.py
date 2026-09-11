@@ -11,6 +11,7 @@ from utils.auth import (
 from utils.translations import t
 from utils.theme import get_palette
 from utils.logo import logo_html
+from utils.icons import icon_shield, icon_users
 
 
 def render_sidebar():
@@ -57,22 +58,22 @@ def render_sidebar():
 
         current = st.session_state.get("current_page", "dashboard")
 
-        if st.button(f"\U0001f4ca {t('dashboard', lang)}", use_container_width=True,
+        if st.button(f":material/dashboard: {t('dashboard', lang)}", use_container_width=True,
                      type="primary" if current == "dashboard" else "secondary"):
             navigate_to("dashboard")
             st.rerun()
 
-        if st.button(f"\U0001f514 {t('alerts', lang)}", use_container_width=True,
+        if st.button(f":material/notifications: {t('alerts', lang)}", use_container_width=True,
                      type="primary" if current == "alerts" else "secondary"):
             navigate_to("alerts")
             st.rerun()
 
-        if st.button(f"\U0001f4ac {t('messages', lang)}", use_container_width=True,
+        if st.button(f":material/chat: {t('messages', lang)}", use_container_width=True,
                      type="primary" if current == "messages" else "secondary"):
             navigate_to("messages")
             st.rerun()
 
-        if st.button(f"\U0001f464 {t('profile', lang)}", use_container_width=True,
+        if st.button(f":material/person: {t('profile', lang)}", use_container_width=True,
                      type="primary" if current == "profile" else "secondary"):
             navigate_to("profile")
             st.rerun()
@@ -83,26 +84,26 @@ def render_sidebar():
             st.markdown(
                 f'<div style="font-size: 0.65rem; color: {p["sidebar_accent"]}; text-transform: uppercase; '
                 f'letter-spacing: 1.5px; margin-bottom: 0.5rem; font-weight: 700;">'
-                f'\U0001f6e1\ufe0f ADMINISTRATION</div>',
+                f'{icon_shield(p["sidebar_accent"], 12)} ADMINISTRATION</div>',
                 unsafe_allow_html=True,
             )
 
-            if st.button(f"\U0001f5fa\ufe0f {t('mapping_view', lang)}", use_container_width=True,
+            if st.button(f":material/map: {t('mapping_view', lang)}", use_container_width=True,
                          type="primary" if current == "mapping" else "secondary"):
                 navigate_to("mapping")
                 st.rerun()
 
-            if st.button(f"\u2795 {t('create_admin', lang)}", use_container_width=True,
+            if st.button(f":material/person_add: {t('create_admin', lang)}", use_container_width=True,
                          type="primary" if current == "admin_management" else "secondary"):
                 navigate_to("admin_management")
                 st.rerun()
 
-            if st.button(f"\U0001f465 {t('user_management', lang)}", use_container_width=True,
+            if st.button(f":material/group: {t('user_management', lang)}", use_container_width=True,
                          type="primary" if current == "user_management" else "secondary"):
                 navigate_to("user_management")
                 st.rerun()
 
-            if st.button(f"\U0001f404 {t('cattle_management', lang)}", use_container_width=True,
+            if st.button(f":material/pets: {t('cattle_management', lang)}", use_container_width=True,
                          type="primary" if current == "cattle_management" else "secondary"):
                 navigate_to("cattle_management")
                 st.rerun()
@@ -113,22 +114,22 @@ def render_sidebar():
             st.markdown(
                 f'<div style="font-size: 0.65rem; color: {p["sidebar_muted"]}; text-transform: uppercase; '
                 f'letter-spacing: 1.5px; margin-bottom: 0.5rem; font-weight: 700;">'
-                f'\u2695\ufe0f MANAGEMENT</div>',
+                f'{icon_users(p["sidebar_muted"], 12)} MANAGEMENT</div>',
                 unsafe_allow_html=True,
             )
 
-            if st.button(f"\u2795 {t('create_user', lang)}", use_container_width=True,
+            if st.button(f":material/person_add: {t('create_user', lang)}", use_container_width=True,
                          type="primary" if current == "user_management" else "secondary"):
                 navigate_to("user_management")
                 st.rerun()
 
-            if st.button(f"\U0001f404 {t('cattle_management', lang)}", use_container_width=True,
+            if st.button(f":material/pets: {t('cattle_management', lang)}", use_container_width=True,
                          type="primary" if current == "cattle_management" else "secondary"):
                 navigate_to("cattle_management")
                 st.rerun()
 
         # Logout
         st.markdown("---")
-        if st.button(f"\U0001f6aa {t('logout', lang)}", use_container_width=True):
+        if st.button(f":material/logout: {t('logout', lang)}", use_container_width=True):
             logout_user()
             st.rerun()
