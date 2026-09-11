@@ -9,6 +9,7 @@ from utils.auth import get_lang, get_token, get_user, navigate_to
 from utils.theme import get_palette, health_color, health_bg, ACCENT
 from services.api_client import api_get_cattle_list, api_get_all_latest, api_get_recent_health_events
 from components.navbar import render_navbar
+from components.live_panel import inject_dashboard_css, render_live_panel
 
 
 def render():
@@ -18,6 +19,7 @@ def render():
     p = get_palette()
 
     render_navbar()
+    inject_dashboard_css()
 
     st.markdown(f"### 👋 {t('welcome', lang)}, {user.get('full_name', 'User')}!")
 
@@ -44,6 +46,8 @@ def render():
                     unsafe_allow_html=True)
 
     st.markdown("---")
+
+    render_live_panel(token, cattle_list, lang, key="user")
 
     st.subheader(f"🐄 {t('my_cattle', lang)}")
 
@@ -144,9 +148,9 @@ def _render_cattle_card(cattle: dict, sensor: dict | None, lang: str, p: dict):
 
 def _card(p: dict, icon: str, label: str, value: str, color: str) -> str:
     return f"""
-    <div style="background: {p['card_bg']}; border: 1px solid {p['card_border']};
-                border-radius: 10px; padding: 1.25rem; text-align: center;
-                box-shadow: 0 1px 3px {p['card_shadow']};">
+    <div class="cc-card" style="background: {p['card_bg']}; border: 1px solid {p['card_border']};
+                border-top: 3px solid {color}; border-radius: 10px; padding: 1.25rem;
+                text-align: center; box-shadow: 0 1px 3px {p['card_shadow']};">
         <div style="font-size: 1.5rem;">{icon}</div>
         <div style="font-size: 1.8rem; font-weight: 700; color: {color};">{value}</div>
         <div style="color: {p['text_secondary']}; font-size: 0.85rem;">{label}</div>

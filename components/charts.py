@@ -122,6 +122,55 @@ def build_overview_chart(readings: list) -> go.Figure:
     return fig
 
 
+def build_live_trend_chart(readings: list, height: int = 320) -> go.Figure:
+    """Compact temperature + heart rate trend for the dashboard live panel."""
+    p = get_palette()
+    data = _extract_sensor_data(readings)
+    fig = make_subplots(
+        rows=2, cols=1,
+        shared_xaxes=True,
+        vertical_spacing=0.14,
+        subplot_titles=("🌡️ Temperature (°C)", "❤️ Heart Rate (BPM)"),
+    )
+
+    for row, (series, color, hi, lo) in enumerate(
+        [("temperature", SERIES["temperature"], 39.5, 35.0),
+         ("bpm", SERIES["bpm"], 100, 30)], start=1
+    ):
+        fig.add_trace(go.Scatter(
+            x=data["timestamps"], y=data[series],
+            mode="lines", name=series,
+            line=dict(color=color, width=2, shape="spline", smoothing=0.4),
+        ), row=row, col=1)
+
+        # Highlight the newest reading so the live edge of the series is obvious
+        if data["timestamps"]:
+            fig.add_trace(go.Scatter(
+                x=[data["timestamps"][-1]], y=[data[series][-1]],
+                mode="markers", showlegend=False, hoverinfo="skip",
+                marker=dict(color=color, size=10,
+                            line=dict(color=p["chart_paper"], width=2)),
+            ), row=row, col=1)
+
+        fig.add_hline(y=hi, line_dash="dot", line_color=SERIES["temperature"],
+                      opacity=0.4, row=row, col=1)
+        fig.add_hline(y=lo, line_dash="dot", line_color=SERIES["activity"],
+                      opacity=0.4, row=row, col=1)
+
+    base = _layout(p)
+    fig.update_layout(
+        height=height,
+        showlegend=False,
+        **{k: v for k, v in base.items() if k not in ("xaxis", "yaxis")},
+    )
+    fig.update_annotations(font=dict(size=12, color=p["chart_text"]))
+    for i in (1, 2):
+        fig.update_xaxes(gridcolor=p["chart_grid"], showgrid=True, row=i, col=1)
+        fig.update_yaxes(gridcolor=p["chart_grid"], showgrid=True, row=i, col=1)
+
+    return fig
+
+
 def build_acceleration_chart(readings: list) -> go.Figure:
     """Acceleration XYZ chart."""
     p = get_palette()

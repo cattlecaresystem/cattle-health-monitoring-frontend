@@ -598,6 +598,63 @@ TRANSLATIONS = {
         "ta": "அமர்வு செல்லாது. உள்நுழையவும்.",
         "hi": "सत्र अमान्य। कृपया साइन इन करें।",
     },
+
+    # ── Live dashboard panel ──
+    "live_monitor": {
+        "en": "Live Monitor",
+        "ta": "நேரலை கண்காணிப்பு",
+        "hi": "लाइव मॉनिटर",
+    },
+    "live": {
+        "en": "Live",
+        "ta": "நேரலை",
+        "hi": "लाइव",
+    },
+    "pause": {
+        "en": "Pause",
+        "ta": "இடைநிறுத்து",
+        "hi": "रोकें",
+    },
+    "paused": {
+        "en": "Paused",
+        "ta": "இடைநிறுத்தப்பட்டது",
+        "hi": "रुका हुआ",
+    },
+    "refresh_interval": {
+        "en": "Refresh",
+        "ta": "புதுப்பிப்பு",
+        "hi": "रिफ्रेश",
+    },
+    "last_synced": {
+        "en": "Last synced",
+        "ta": "கடைசி புதுப்பிப்பு",
+        "hi": "अंतिम सिंक",
+    },
+    "select_cattle": {
+        "en": "Select cattle",
+        "ta": "கால்நடையைத் தேர்ந்தெடுக்கவும்",
+        "hi": "पशु चुनें",
+    },
+    "avg_temperature": {
+        "en": "Avg Temperature",
+        "ta": "சராசரி வெப்பநிலை",
+        "hi": "औसत तापमान",
+    },
+    "avg_heart_rate": {
+        "en": "Avg Heart Rate",
+        "ta": "சராசரி இதயத் துடிப்பு",
+        "hi": "औसत हृदय गति",
+    },
+    "reporting": {
+        "en": "Reporting",
+        "ta": "தரவு அனுப்புகிறது",
+        "hi": "डेटा भेज रहे",
+    },
+    "herd_health": {
+        "en": "Herd Health",
+        "ta": "மந்தை நலன்",
+        "hi": "झुंड स्वास्थ्य",
+    },
 }
 
 

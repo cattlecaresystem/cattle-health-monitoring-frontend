@@ -13,6 +13,7 @@ from services.api_client import (
     api_get_recent_alerts, api_get_recent_health_events,
 )
 from components.navbar import render_navbar
+from components.live_panel import inject_dashboard_css, render_live_panel
 
 
 def render():
@@ -23,6 +24,7 @@ def render():
     p = get_palette()
 
     render_navbar()
+    inject_dashboard_css()
 
     st.markdown(f"### 👋 {t('welcome', lang)}, Dr. {user.get('full_name', 'Admin')}!")
 
@@ -52,6 +54,8 @@ def render():
                     unsafe_allow_html=True)
 
     st.markdown("---")
+
+    render_live_panel(token, my_cattle, lang, key="admin")
 
     col_left, col_right = st.columns([3, 2])
 
@@ -146,9 +150,9 @@ def render():
 
 def _card(p: dict, icon: str, label: str, value: str, color: str) -> str:
     return f"""
-    <div style="background: {p['card_bg']}; border: 1px solid {p['card_border']};
-                border-radius: 10px; padding: 1rem; text-align: center;
-                box-shadow: 0 1px 3px {p['card_shadow']};">
+    <div class="cc-card" style="background: {p['card_bg']}; border: 1px solid {p['card_border']};
+                border-top: 3px solid {color}; border-radius: 10px; padding: 1rem;
+                text-align: center; box-shadow: 0 1px 3px {p['card_shadow']};">
         <div style="font-size: 1.3rem;">{icon}</div>
         <div style="font-size: 1.6rem; font-weight: 700; color: {color};">{value}</div>
         <div style="color: {p['text_secondary']}; font-size: 0.8rem;">{label}</div>
